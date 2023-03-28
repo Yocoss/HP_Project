@@ -1,6 +1,6 @@
 # HP_Project
 
-This folder ocntains the three main program used in this project: 
+This folder contains the three main program used in this project: 
   
   The C++ code Ardu.cpp
   The html interface2.html 
