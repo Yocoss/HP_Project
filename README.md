@@ -2,11 +2,11 @@
 
 This folder contains the three main program used in this project: 
   
-  The C++ code Ardu.cpp
+  • The C++ code Ardu.cpp
   
-  The html interface2.html 
+  • The html interface2.html 
   
-  The python script Script.py
+  • The python script Script.py
   
  It also contains the input file used in Abaqus to interact with the software, and a CAE file (just in case someone would like to directly reuse an existing job.
  
