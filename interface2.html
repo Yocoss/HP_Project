@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Data Visualization Interface</title>
+	<style>
+		/*style for the data visualization windows*/
+		#window1, #window2 {
+			width: 310px; 
+			height: 200px;
+			border: 1px solid #4CAF50;
+			background-color: rgb(107, 99, 99);
+			color: #ffffff;
+			margin: 10px;
+			padding: 10px;
+			float: left;
+		}
+        /*style for the background*/
+        body {
+			background-color: lightblue;
+			font-family: Arial;
+			font-size: 16px;
+            text-align: center;
+		}
+
+		/*style for the buttons*/
+		button {
+			margin: 10px;
+			padding: 40px;
+			font-size: 16px;
+			background-color: hwb(122 30% 31%);
+			color: hsl(0, 0%, 100%);
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<!--data visualization windows-->
+	<div id="window1">
+		<h2>Data Visualization Window 1</h2>
+		<!--failed coding thhis part to display the collected data from the arduino using a serial port communication-->
+	</div>
+	<div id="window2">
+		<h2>Data Visualization Window 2</h2>
+		<!--the ohm value displayed on window1 would've been calculated and transformed into Newton and siplayed here -->
+	</div>
+
+	<!--buttons-->
+	<button id="new-btn">New</button>
+	<button id="start-btn">Start</button>
+	<button id="stop-btn">Stop</button>
+    
+
+	<!--script for the actions of the buttons-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		var newBtn = document.getElementById("new-btn");
+		var startBtn = document.getElementById("start-btn");
+		var stopBtn = document.getElementById("stop-btn");
+		var serialData = "";
+		var serial;
+
+		//add event listeners to buttons
+		newBtn.addEventListener("click", function() {
+			//open the serial port and start reading data
+			serial = new Serial();
+			serial.open('COM3', { baudRate: 9600 });
+			serial.on('flexdata', function(data) {
+				serialData += data;
+				if (serialData.indexOf('\n') >= 0) {
+					var flexValue = parseFloat(serialData.trim());
+					$("#flex-Value").text(flexValue);
+					serialData = "";
+				}
+			});
+
+			//enable start button
+			startBtn.disabled = false;
+
+			//enable stop button
+			stopBtn.disabled = false;
+		});
+
+		stopBtn.addEventListener("click", function() {
+			//send an Ajax request to save the data on a database
+			var flexValue = parseFloat($("#flex-Value").text());
+			$.ajax({
+				url: "save-flex-level.php",
+				type: "POST",
+				data: { flexValue: flexValue },
+				success: function(data) {
+					alert("Data saved successfully.");
+				},
+				error: function() {
+					alert("Error saving data.");
+				}
+			});
+
+			//disable start button
+			startBtn.disabled = true;
+
+			//enable stop button
+			newBtn.disabled = false;
+		});
+
+		stopBtn.addEventListener("click", function() {
+
+			//close the serial port
+			serial.close();
+
+			//enable new button
+			newBtn.disabled = false;
+
+			//disable stop button
+			stopBtn.disabled = true;
+		});
+	</script>
+</body>
+
+<html>
+<head>
+	<title>Pannel</title>
+	<style>
+		.container {
+			margin: 50px auto;
+			padding: 20px 20px 10px 20px;
+            height: calc(100% - 100px);
+			width: 400px;
+			background-color: white;
+			border: 1px solid black;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.5);
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Data trigger and visualization interface</h1>
+	</div>
+</body>
+</html>
