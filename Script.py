@@ -3,7 +3,7 @@ import os
 import shutil
 
 #path to the storage folder to get Abaqus work files 
-output_folder = 'C:/Users/Yohann/Documents/Abaqus/Abaqus_1stanalysis/files/job1.jnl'
+output_folder = 'C:/Users/Yohann/Documents/Abaqus/Abaqus_1stanalysis/files/ProtoFinal_Analysis_job1.jnl'
 #define the way to access the existing youngmodulus value
 input_file = 'C:/Users/Yohann/Documents/Abaqus/Abaqus_1stanalysis/files/load.inp'
 #old newt value
